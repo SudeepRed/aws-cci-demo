@@ -2,8 +2,8 @@ from playwright.sync_api import Playwright, sync_playwright, expect
 
 
 
-def test_contact_form(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=True)
+def test_contact_form(playwright: Playwright) -> None:
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     f = open('container_ip.txt', 'r')
@@ -11,7 +11,7 @@ def test_contact_form(playwright: Playwright):
     f.close()
     ip ="http://"+cip+":8080/"
     print(ip)
-    page.goto(ip)
+    page.goto(ip, timeout = 60*1000*3)
     page.get_by_role("link", name="Contact").click()
     page.locator("input[name=\"name\"]").click()
     page.locator("input[name=\"name\"]").fill("test")
@@ -24,9 +24,10 @@ def test_contact_form(playwright: Playwright):
     page.locator("textarea[name=\"message\"]").click()
     page.locator("textarea[name=\"message\"]").fill("123")
     expect(page.locator("textarea[name=\"message\"]")).to_have_value("123")
-    page.get_by_role("but", name="Sub").click()
+    page.get_by_role("button", name="Submit").click()
+    
 
-   
+    # ---------------------
     context.close()
     browser.close()
 
