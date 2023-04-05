@@ -1,0 +1,20 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.2.0
+jobs:
+  test:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - docker/install-docker-compose
+      - run: docker-compose up -d
+      - run: pip install poetry
+      - run: cd app/ && poetry  install && poetry run playwright install --with-deps
+      - run: cd app/ && bash test.sh
+      - run: cd app/ && poetry run pytest
+
+workflows:
+  integration_tests:
+    jobs:
+      - test

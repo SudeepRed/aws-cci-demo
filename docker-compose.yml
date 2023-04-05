@@ -1,0 +1,18 @@
+version: "3"
+services:
+  pythonapp:
+    build: ./app/
+    command: sh -c "sleep 10s ; poetry run python3 app.py"
+    depends_on:
+      - mysql
+    ports:
+      - '5000:5000'
+
+  mysql:
+    build: ./mysql/
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
