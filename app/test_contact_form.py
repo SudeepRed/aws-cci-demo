@@ -11,7 +11,7 @@ def test_contact_form(playwright: Playwright):
     f.close()
     ip ="http://"+cip+":8080/"
     print(ip)
-    page.goto(ip, timeout = 60*1000*3)
+    page.goto(ip)
     page.get_by_role("link", name="Contact").click()
     page.locator("input[name=\"name\"]").click()
     page.locator("input[name=\"name\"]").fill("test")
@@ -24,7 +24,7 @@ def test_contact_form(playwright: Playwright):
     page.locator("textarea[name=\"message\"]").click()
     page.locator("textarea[name=\"message\"]").fill("123")
     expect(page.locator("textarea[name=\"message\"]")).to_have_value("123")
-    page.get_by_role("button", name="Sub").click()
+    page.get_by_role("but", name="Sub").click()
 
    
     context.close()
