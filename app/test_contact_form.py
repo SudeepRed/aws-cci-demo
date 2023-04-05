@@ -24,7 +24,7 @@ def test_contact_form(playwright: Playwright):
     page.locator("textarea[name=\"message\"]").click()
     page.locator("textarea[name=\"message\"]").fill("123")
     expect(page.locator("textarea[name=\"message\"]")).to_have_value("123")
-    page.get_by_role("button", name="Submit").click()
+    page.get_by_role("button", name="Sub").click()
 
    
     context.close()
