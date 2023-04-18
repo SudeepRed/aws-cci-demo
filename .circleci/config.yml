@@ -22,7 +22,7 @@ jobs:
       - checkout
       - aws-ecr/ecr-login
       - run: cd app/      
-      - run: docker buildx build -f ./Dockerfile --no-cache --progress=plain -t app:latest .
+      - run: docker build --no-cache --progress=plain -t app:latest .
       - aws-ecr/push-image:
           repo: aws-cicd 
           
