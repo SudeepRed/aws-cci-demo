@@ -3,6 +3,7 @@ orbs:
   docker: circleci/docker@2.2.0
   aws-ecr: circleci/aws-ecr@8.2.1
   aws-ecs: circleci/aws-ecs@3.2.0
+  aws-cli: circleci/aws-cli@3.1.5
 jobs:
   test:
     machine:
@@ -15,13 +16,19 @@ jobs:
       - run: cd app/ && poetry  install && poetry run playwright install --with-deps
       - run: cd app/ && bash test.sh
       - run: cd app/ && poetry run pytest
-
+  custom-aws-ecr/build-and-push-image:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run: cd app/
+      - aws-ecr/build-and-push-image:
+          repo: aws-cicd 
+  
 workflows:
   integration_tests:
     jobs:
       - test
   build-and-deploy:
     jobs:
-      - aws-ecr/build-and-push-image:
-          path: app/
-          repo: aws-cicd
+      - custom-aws-ecr/build-and-push-image

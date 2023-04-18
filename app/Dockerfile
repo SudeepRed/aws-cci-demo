@@ -5,6 +5,5 @@ RUN mkdir flask-app
 WORKDIR /flask-app
 COPY . .
 RUN pip install poetry
-RUN echo "$PWD"
 RUN ls
 RUN poetry install -vvv --no-dev
