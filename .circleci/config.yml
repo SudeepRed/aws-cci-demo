@@ -16,7 +16,7 @@ jobs:
       - run: cd app/ && poetry  install && poetry run playwright install --with-deps
       - run: cd app/ && bash test.sh
       - run: cd app/ && poetry run pytest
-  custom-aws-ecr/build-and-push-image:
+  custom-aws-ecr:
     machine:
       image: ubuntu-2004:202010-01
     steps:
@@ -29,6 +29,6 @@ workflows:
   integration_tests:
     jobs:
       - test
-  build-and-deploy:
+  custom-build-and-deploy:
     jobs:
-      - custom-aws-ecr/build-and-push-image
+      - custom-aws-ecr
