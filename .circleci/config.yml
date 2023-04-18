@@ -20,9 +20,12 @@ jobs:
       image: ubuntu-2004:202010-01
     steps:
       - checkout
-      - run: cd app/
-      - aws-ecr/build-and-push-image:
+      - aws-ecr/ecr-login
+      - run: cd app/      
+      - run: docker buildx build -f ./Dockerfile --no-cache --progress=plain -t app:latest .
+      - aws-ecr/push-image:
           repo: aws-cicd 
+          
   
 workflows:
   integration_tests:
