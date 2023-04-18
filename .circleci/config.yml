@@ -22,6 +22,7 @@ jobs:
       - checkout
       - aws-ecr/ecr-login
       - run: cd app/ && docker build --no-cache --progress=plain -t app:latest .
+      - run: docker tag app:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}-1.amazonaws.com/aws-cicd:latest
       - aws-ecr/push-image:
           repo: aws-cicd 
           
