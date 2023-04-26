@@ -4,7 +4,7 @@ import mysql.connector
 
 app = Flask(__name__, static_folder="assets", template_folder="templates")
 
-myconn = mysql.connector.connect(host = "mysql", user = "root",password = "root",database = "db", port = "3306")
+myconn = mysql.connector.connect(host = "localhost", user = "root",password = "root",database = "db", port = "3306")
 curr = myconn.cursor()
 
 
