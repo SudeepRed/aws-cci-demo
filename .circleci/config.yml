@@ -21,7 +21,7 @@ jobs:
     steps:
       - checkout
       - aws-ecr/ecr-login
-      - run: cd app/ && docker build --no-cache --progress=plain -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-cicd:latest .
+      - run: cd mysql/ && docker build --no-cache --progress=plain -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mysql:latest .
       - aws-ecr/push-image:
           repo: aws-cicd 
           
