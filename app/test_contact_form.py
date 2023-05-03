@@ -9,7 +9,7 @@ def test_contact_form(playwright: Playwright) -> None:
     f = open('container_ip.txt', 'r')
     cip = f.read().strip()
     f.close()
-    ip ="http://"+cip+":8080/"
+    ip ="http://"+cip+":5000/"
     print(ip)
     page.goto(ip, timeout = 60*1000*3)
     page.get_by_role("link", name="Contact").click()
