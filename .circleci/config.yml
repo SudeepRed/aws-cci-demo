@@ -30,6 +30,6 @@ workflows:
   integration_tests:
     jobs:
       - test
-  custom-build-and-deploy:
-    jobs:
-      - custom-aws-ecr
+      - custom-aws-ecr:
+          requires:
+            - test
