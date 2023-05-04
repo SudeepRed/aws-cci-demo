@@ -23,7 +23,8 @@ jobs:
       - aws-ecr/ecr-login
       - run: cd app/ && docker build --no-cache --progress=plain -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-cicd:latest .
       - aws-ecr/push-image:
-          repo: aws-cicd 
+          repo: aws-cicd
+      - run: aws ecs update-service --cluster ecs-test --service cb --force-new-deployment
           
   
 workflows:
