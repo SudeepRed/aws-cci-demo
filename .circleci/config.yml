@@ -1,6 +1,8 @@
 version: 2.1
 orbs:
   docker: circleci/docker@2.2.0
+  aws-ecr: circleci/aws-ecr@8.2.1
+  aws-ecs: circleci/aws-ecs@3.2.0
 jobs:
   test:
     machine:
@@ -13,8 +15,22 @@ jobs:
       - run: cd app/ && poetry  install && poetry run playwright install --with-deps
       - run: cd app/ && bash test.sh
       - run: cd app/ && poetry run pytest
-
+  custom-aws-ecr:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - aws-ecr/ecr-login
+      - run: cd app/ && docker build --no-cache --progress=plain -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-cicd:latest .
+      - aws-ecr/push-image:
+          repo: aws-cicd
+      - run: aws ecs update-service --cluster ecs-test --service cb_n --force-new-deployment
+          
+  
 workflows:
   integration_tests:
     jobs:
       - test
+      - custom-aws-ecr:
+          requires:
+            - test

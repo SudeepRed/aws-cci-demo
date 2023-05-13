@@ -5,6 +5,8 @@ services:
     command: sh -c "sleep 10s ; poetry run python3 app.py"
     depends_on:
       - mysql
+    environment:
+      DB_HOST: 'mysql'
     ports:
       - '5000:5000'
 
