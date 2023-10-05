@@ -1,10 +1,12 @@
 from flask import*
 from flask import render_template
 import mysql.connector
+import os
+
 
 app = Flask(__name__, static_folder="assets", template_folder="templates")
 
-myconn = mysql.connector.connect(host = "mysql", user = "root",password = "root",database = "db", port = "3306")
+myconn = mysql.connector.connect(host = os.environ["DB_HOST"], user = "root",password = "root",database = "db", port = "3306")
 curr = myconn.cursor()
 
 
@@ -50,5 +52,5 @@ def k2():
 # 	return "<h1>Hello World</h1>"
 
 if __name__ == '__main__':
-	app.run(host = "0.0.0.0",port = 8080)
+	app.run(host = "0.0.0.0",port = 5000)
 # 	app.run(debug = True)
