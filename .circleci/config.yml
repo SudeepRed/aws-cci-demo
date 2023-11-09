@@ -11,7 +11,6 @@ jobs:
       - checkout
       - docker/install-docker-compose
       - run: docker-compose up -d
-      # - run: cd app/ && bash test.sh
       - run: pip install poetry
       - run: cd app/ && poetry  install && poetry run playwright install --with-deps
       - run: cd app/ && poetry run pytest
@@ -24,7 +23,7 @@ jobs:
       - run: cd app/ && docker build --no-cache --progress=plain -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/aws-cicd:latest .
       - aws-ecr/push-image:
           repo: aws-cicd
-      - run: aws ecs update-service --cluster ecs-test --service cb_n --force-new-deployment
+      - run: aws ecs update-service --cluster aws-cicd-demo --service serv-2 --force-new-deployment
           
   
 workflows:
