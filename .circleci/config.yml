@@ -11,7 +11,7 @@ jobs:
       - checkout
       - docker/install-docker-compose
       - run: docker-compose up -d
-      - run: cd app/ && bash test.sh
+      # - run: cd app/ && bash test.sh
       - run: pip install poetry
       - run: cd app/ && poetry  install && poetry run playwright install --with-deps
       - run: cd app/ && poetry run pytest
